@@ -2,35 +2,34 @@ import { useState } from 'react'
 import './App.css'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
+import SearchBar from '../SearchBar/SearchBar'
+import { searchTracks } from '../Utils/LastFm'
 
 export default function App() {
-  const [searchResult, setSearchResult] = useState([
-    {
-      name: "Faint",
-      artist: "Linkin Park",
-      album: "Meteora",
-      id: "1"
-    },
-
-    {
-      name: "Riot",
-      artist: "Three Days Grace",
-      album: "One-X",
-      id: "2"
-    },
-
-    {
-      name: "Monster",
-      artist: "Skillet",
-      album: "Awake",
-      id: "3"
-    }
-  ])
+  const [searchResult, setSearchResult] = useState([])
 
    const [playList, setPlayList] = useState({
     playlist_name: "Test Playlist",
     playlist_tracks: []
   })
+
+  const handleSearch = async (query) => {
+    try {
+        const tracks = await searchTracks(query)
+
+        const newTracks = tracks.map((track) => {
+            return {
+                id: track.mbid || track.url,
+                name: track.name,
+                artist: track.artist
+            }
+        })
+
+        setSearchResult(newTracks)
+    } catch (error) {
+        console.error('Search failed:', error)
+    }
+}
 
   const addSongToPlayList = (track) => {
     setPlayList((prev) => {
@@ -70,6 +69,7 @@ export default function App() {
 
   return (
     <div>
+      <SearchBar onSearch={handleSearch} />
       <SearchResults tracks={searchResult} onAddSong={addSongToPlayList} />
       <Playlist playlist={playList} onRemove={removeTrack} changeName={playlistNameChange} />
     </div>

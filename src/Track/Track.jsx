@@ -5,7 +5,6 @@ export default function Track(props) {
         <div>
             {props.track.name}
             {props.track.artist}
-            {props.track.album}
             {props.onAddSong && (<button onClick={() => props.onAddSong(props.track)}>+</button>)}
             {props.onRemove && (<button onClick={() => props.onRemove(props.track)}>-</button>)}
         </div>
