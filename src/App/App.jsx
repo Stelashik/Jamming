@@ -47,11 +47,22 @@ export default function App() {
     })
   }
 
+  const removeTrack = (remove_track) => {
+    setPlayList((prev) => {
+      const updatedPlaylist = prev.playlist_tracks.filter( track => track.id !== remove_track.id)
+
+      return {
+        ...prev,
+        playlist_tracks: updatedPlaylist
+      }
+    })
+  }
+
 
   return (
     <div>
       <SearchResults tracks={searchResult} onAddSong={addSongToPlayList} />
-      <Playlist playlist={playList} />
+      <Playlist playlist={playList} onRemove={removeTrack} />
     </div>
   )
 }

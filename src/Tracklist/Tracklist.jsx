@@ -1,13 +1,13 @@
 import './Tracklist.css'
 import Track from '../Track/Track'
 
-export default function Tracklist({ tracks, onAddSong}) {
+export default function Tracklist({ tracks, onAddSong, onRemove }) {
     return (
         <div>
             {tracks.map((track) => {
                 return (
                     <div key={track.id}>
-                        <Track track={track} onAddSong={onAddSong} />
+                        <Track track={track} onAddSong={onAddSong} onRemove={onRemove} />
                     </div>
                 )
             })}
