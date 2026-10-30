@@ -6,6 +6,7 @@ export default function Track(props) {
             {props.track.name}
             {props.track.artist}
             {props.track.album}
+            {props.onAddSong && (<button onClick={() => props.onAddSong(props.track)}>+</button>)}
         </div>
     )
 }
