@@ -58,11 +58,20 @@ export default function App() {
     })
   }
 
+  const playlistNameChange = (newPlaylistName) => {
+    setPlayList((prev) => {
+      return {
+        ...prev,
+        playlist_name: newPlaylistName
+      }
+    })
+  }
+
 
   return (
     <div>
       <SearchResults tracks={searchResult} onAddSong={addSongToPlayList} />
-      <Playlist playlist={playList} onRemove={removeTrack} />
+      <Playlist playlist={playList} onRemove={removeTrack} changeName={playlistNameChange} />
     </div>
   )
 }
